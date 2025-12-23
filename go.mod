@@ -1,4 +1,4 @@
-module github.com/GabrielMoody/HTTPServerGo
+module github.com/GabrielMoody/http-server
 
 go 1.25.4
 
