@@ -19,3 +19,19 @@ func TestParseHttpRequestLine(t *testing.T) {
 	assert.Equal(t, "HTTP/1.1", rl.RequestLine.HttpVersion)
 
 }
+
+func TestInvalidMethodRequest(t *testing.T) {
+	_, err := RequestLineReader(strings.NewReader("INVALID /test HTTP/1.1\r\n\r\n"))
+
+	require.Error(t, err)
+
+	assert.Equal(t, ERR_MALFORMED_HTTP_REQUEST, err)
+}
+
+func TestInvalidHttpVersionRequest(t *testing.T) {
+	_, err := RequestLineReader(strings.NewReader("GET /test HTTP/100.20\r\n\r\n"))
+
+	require.Error(t, err)
+
+	assert.Equal(t, ERR_MALFORMED_HTTP_REQUEST, err)
+}
