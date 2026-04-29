@@ -44,3 +44,13 @@ func TestParseHeaderInlineMultipleValue(t *testing.T) {
 	assert.Equal(t, "text/html", parsedHeader["Accept"][0])
 	assert.Equal(t, "application/json", parsedHeader["Accept"][1])
 }
+
+func TestParseHeaderMultipleKeyAndMultipleValue(t *testing.T) {
+	header := strings.NewReader("Accept: text/html, application/json\r\nAccept: image/png\r\n\r\n")
+
+	parsedHeader, _ := RequestHeaderReader(header)
+
+	assert.Equal(t, "text/html", parsedHeader["Accept"][0])
+	assert.Equal(t, "application/json", parsedHeader["Accept"][1])
+	assert.Equal(t, "image/png", parsedHeader["Accept"][2])
+}
